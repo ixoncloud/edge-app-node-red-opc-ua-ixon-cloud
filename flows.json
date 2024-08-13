@@ -1,0 +1,120 @@
+[
+  {
+    "id": "55664ab706d66bc4",
+    "type": "OpcUa-Server",
+    "z": "7b770c75d418e489",
+    "port": "53881",
+    "name": "",
+    "endpoint": "",
+    "users": "",
+    "nodesetDir": "",
+    "autoAcceptUnknownCertificate": true,
+    "registerToDiscovery": false,
+    "constructDefaultAddressSpace": false,
+    "allowAnonymous": true,
+    "endpointNone": true,
+    "endpointSign": true,
+    "endpointSignEncrypt": true,
+    "endpointBasic128Rsa15": true,
+    "endpointBasic256": true,
+    "endpointBasic256Sha256": true,
+    "maxNodesPerBrowse": 0,
+    "maxNodesPerHistoryReadData": 0,
+    "maxNodesPerHistoryReadEvents": 0,
+    "maxNodesPerHistoryUpdateData": 0,
+    "maxNodesPerRead": 0,
+    "maxNodesPerWrite": 0,
+    "maxNodesPerMethodCall": 0,
+    "maxNodesPerRegisterNodes": 0,
+    "maxNodesPerNodeManagement": 0,
+    "maxMonitoredItemsPerCall": 0,
+    "maxNodesPerHistoryUpdateEvents": 0,
+    "maxNodesPerTranslateBrowsePathsToNodeIds": 0,
+    "maxConnectionsPerEndpoint": "",
+    "maxMessageSize": "",
+    "maxBufferSize": "",
+    "maxSessions": "",
+    "x": 600,
+    "y": 240,
+    "wires": [["a4ee0dc7764b8cdd"]]
+  },
+  {
+    "id": "a4ee0dc7764b8cdd",
+    "type": "debug",
+    "z": "7b770c75d418e489",
+    "name": "",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 900,
+    "y": 240,
+    "wires": []
+  },
+  {
+    "id": "476e44cf9427eb86",
+    "type": "inject",
+    "z": "7b770c75d418e489",
+    "name": "Add room_temperature Variable",
+    "props": [
+      {
+        "p": "payload"
+      },
+      {
+        "p": "topic",
+        "vt": "str"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": true,
+    "onceDelay": 0.1,
+    "topic": "ns=1;s=room_temperature;datatype=Float",
+    "payload": "{\"opcuaCommand\": \"addVariable\"}",
+    "payloadType": "json",
+    "x": 260,
+    "y": 140,
+    "wires": [["55664ab706d66bc4"]]
+  },
+  {
+    "id": "0f297d8cbc1972ae",
+    "type": "function",
+    "z": "7b770c75d418e489",
+    "name": "Generate Random Temperature",
+    "func": "msg.payload = {\n    messageType: 'Variable',\n    variableName: 'room_temperature',\n    datatype: 'Float',\n    namespace: 1,\n    variableValue: (Math.random() * 10) + 20 // Random temperature between 20 and 30\n};\nreturn msg;",
+    "outputs": 1,
+    "timeout": "",
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 280,
+    "y": 220,
+    "wires": [["55664ab706d66bc4"]]
+  },
+  {
+    "id": "464ffce70cdf7f24",
+    "type": "inject",
+    "z": "7b770c75d418e489",
+    "name": "Update room_temperature every 10s",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "10",
+    "crontab": "",
+    "once": true,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "",
+    "payloadType": "date",
+    "x": 290,
+    "y": 280,
+    "wires": [["0f297d8cbc1972ae"]]
+  }
+]

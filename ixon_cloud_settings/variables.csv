@@ -1,0 +1,2 @@
+Identifier,Name,Address,Type,Width,Signed,Max string length,Factor,Unit
+room-temperature,Room Temperature,ns=1;s=room_temperature,float,32,,,,°C
