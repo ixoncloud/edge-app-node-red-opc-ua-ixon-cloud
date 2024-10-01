@@ -1,5 +1,18 @@
 # Edge App - Node-RED with OPC UA Server writing data to IXON Cloud
 
+This project demonstrates the integration of Node-RED with an OPC UA Server, specifically designed for deployment on IXON's SecureEdge Pro device and seamless integration with IXON Cloud. It showcases how to leverage IXON's industrial IoT ecosystem for efficient edge computing and cloud connectivity.
+
+Key components of this project include:
+
+1. A custom Node-RED image with OPC UA nodes, optimized for SecureEdge Pro
+2. An OPC UA Server configuration within Node-RED
+3. Docker-based deployment tailored for SecureEdge Pro
+4. Direct integration with IXON Cloud for secure data storage and visualization
+
+This solution demonstrates the power of IXON's SecureEdge Pro as an edge computing platform, capable of running containerized applications like Node-RED. It also highlights the seamless connectivity between edge devices and IXON Cloud, enabling remote monitoring, data analysis, and device management through a unified platform.
+
+Users can take this project as a template and adapt it for their specific use cases within the IXON ecosystem. The flexibility of Node-RED combined with the robustness of SecureEdge Pro allows for easy customization of data flows and integration with various industrial protocols. Whether you need to collect data from PLCs, implement custom data processing logic, or create tailored dashboards in IXON Cloud, this project provides a solid foundation that can be extended to meet diverse requirements in various industrial IoT scenarios.
+
 ## Prerequisites
 
 Ensure your environment is properly set up by following this guide: [Running custom Docker applications on the SecureEdge Pro](https://support.ixon.cloud/hc/en-us/articles/14231117531420-Running-custom-Docker-applications-on-the-SecureEdge-Pro).
@@ -7,6 +20,12 @@ Ensure your environment is properly set up by following this guide: [Running cus
 ## Steps to Deploy Node-RED with OPC UA Nodes
 
 ### 1. Build and Push the Node-RED Container
+
+Ensure you have the correct builder in use:
+
+```bash
+./setup-buildx-env.sh
+```
 
 Run the `build_and_push_containers.sh` script to build and push the Node-RED container with OPC-UA nodes to the SecureEdge Pro:
 
@@ -49,15 +68,9 @@ Refer to the screenshot for configuration details:
 ![HTTP Server](ixon_cloud_settings/http_server_node_red.png)
 
 - You can now access the Node-RED web interface on the SecureEdge Pro via the HTTP Web Server you created in IXON Cloud.
+- The flow in Node-RED is already configured to write to the OPC UA server. It waits for the server to be ready to inject the variables and then starts the loop to update the variable.
 
-### 5. Start the Server in Node-RED
-
-In the Node-RED interface:
-
-1. Click **Add room_temperature Variable** to create the variable in the OPC UA server.
-2. Click **Update room_temperature every 10s** to start a loop that updates the variable every 10 seconds.
-
-### 6. Set Up OPC UA Data Source in IXON Cloud
+### 5. Set Up OPC UA Data Source in IXON Cloud
 
 - In IXON Cloud, create an OPC UA datasource to access the OPC UA server running in Node-RED on the SecureEdge Pro.
 - Import the variables using the provided CSV file: `ixon_cloud_settings/variables.csv`.
