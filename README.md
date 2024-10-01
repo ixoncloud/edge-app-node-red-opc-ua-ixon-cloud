@@ -23,14 +23,30 @@ Ensure your environment is properly set up by following this guide: [Running cus
 
 Ensure you have the correct builder in use:
 
+For Unix-based systems:
+
 ```bash
 ./setup-buildx-env.sh
 ```
 
-Run the `build_and_push_containers.sh` script to build and push the Node-RED container with OPC-UA nodes to the SecureEdge Pro:
+For Windows:
+
+```cmd
+setup-buildx-env.cmd
+```
+
+Run the script to build and push the Node-RED container with OPC-UA nodes to the SecureEdge Pro:
+
+For Unix-based systems:
 
 ```bash
 ./build_and_push_containers.sh
+```
+
+For Windows:
+
+```cmd
+build_and_push_containers.cmd
 ```
 
 ### 2. Set Up the Container on SecureEdge Pro
