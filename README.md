@@ -86,7 +86,16 @@ Refer to the screenshot for configuration details:
 - You can now access the Node-RED web interface on the SecureEdge Pro via the HTTP Web Server you created in IXON Cloud.
 - The flow in Node-RED is already configured to write to the OPC UA server. It waits for the server to be ready to inject the variables and then starts the loop to update the variable.
 
-### 5. Set Up OPC UA Data Source in IXON Cloud
+### 6. Access Virtual HMI Web Interface
+
+- In IXON Cloud, create an HTTP Web Server to easily access the Virtual HMI web interface on the SecureEdge Pro.
+
+Refer to the screenshot for configuration details:  
+![HTTP Server](ixon_cloud_settings/http_server_virtual_hmi.png)
+
+- You can now access the Virtual HMI web interface on the SecureEdge Pro via the HTTP Web Server you created in IXON Cloud.
+
+### 6. Set Up OPC UA Data Source in IXON Cloud
 
 - In IXON Cloud, create an OPC UA datasource to access the OPC UA server running in Node-RED on the SecureEdge Pro.
 - Import the variables using the provided CSV file: `ixon_cloud_settings/variables.csv`.
