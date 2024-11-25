@@ -1,2 +1,3 @@
 Identifier,Name,Address,Type,Width,Signed,Max string length,Factor,Unit
 room-temperature,Room Temperature,ns=1;s=room_temperature,float,32,,,,°C
+room-temperature-setpoint,Room Temperature Setpoint,ns=1;s=room_temperature_setpoint,float,32,,,,°C
