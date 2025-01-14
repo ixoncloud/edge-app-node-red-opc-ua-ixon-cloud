@@ -5,9 +5,12 @@ This project demonstrates the integration of Node-RED with an OPC UA Server, spe
 Key components of this project include:
 
 1. A custom Node-RED image with OPC UA nodes, optimized for SecureEdge Pro
-2. An OPC UA Server configuration within Node-RED
+2. An OPC UA Server built with python
 3. Docker-based deployment tailored for SecureEdge Pro
 4. Direct integration with IXON Cloud for secure data storage and visualization
+
+[!IMPORTANT]  
+Originally, the OPC UA Server node was hosted within the Node-RED container. However, due to [an issue causing Node-RED to become unresponsive](https://github.com/mikakaraila/node-red-contrib-opcua/issues/770) when adding the server node to new flows, the solution has now been split into **two Docker containers**:
 
 This solution demonstrates the power of IXON's SecureEdge Pro as an edge computing platform, capable of running containerized applications like Node-RED. It also highlights the seamless connectivity between edge devices and IXON Cloud, enabling remote monitoring, data analysis, and device management through a unified platform.
 
@@ -49,6 +52,18 @@ For Windows:
 build_and_push_containers.cmd
 ```
 
+### 2. Set Up the OPC UA Server on SecureEdge Pro
+
+- Access the local web interface of the SecureEdge Pro.
+- Create a `opcua-server` container using the `opcua-server` image with the following port mappings:
+
+  ```
+  Port Mapping: 50000:50000
+  ```
+
+Refer to the screenshot for configuration details:  
+![Create Container](opcua-server/secure_edge_pro_settings/create_container.png)
+
 ### 2. Set Up the Container on SecureEdge Pro
 
 - Access the local web interface of the SecureEdge Pro.
@@ -56,7 +71,6 @@ build_and_push_containers.cmd
 
   ```
   Port Mapping: 1880:1880
-  Port Mapping: 53881:53881
   ```
 
 - Create a volume with the following settings:
@@ -66,22 +80,23 @@ build_and_push_containers.cmd
   ```
 
 Refer to the screenshot for configuration details:  
-![Create Container](secure_edge_pro_settings/create_container.png)
+![Create Container](node-red/secure_edge_pro_settings/create_container.png)
 
-### 3. Start the Container
+### 3. Start the Containers
 
-- Wait for the container to be created.
-- Start the container.
+- Wait for the containers to be created.
+- Start the containers.
 
-Refer to the screenshot for details:  
-![Running Container](secure_edge_pro_settings/running_container.png)
+Refer to the screenshots for details:  
+![Running Container](opcua-server/secure_edge_pro_settings/running_container.png)
+![Running Container](node-red/secure_edge_pro_settings/running_container.png)
 
 ### 4. Access Node-RED Web Interface
 
 - In IXON Cloud, create an HTTP Web Server to easily access the Node-RED web interface on the SecureEdge Pro.
 
 Refer to the screenshot for configuration details:  
-![HTTP Server](ixon_cloud_settings/http_server_node_red.png)
+![HTTP Server](node-red/ixon_cloud_settings/http_server_node_red.png)
 
 - You can now access the Node-RED web interface on the SecureEdge Pro via the HTTP Web Server you created in IXON Cloud.
 - The flow in Node-RED is already configured to write to the OPC UA server. It waits for the server to be ready to inject the variables and then starts the loop to update the variable.
@@ -91,18 +106,18 @@ Refer to the screenshot for configuration details:
 - In IXON Cloud, create an HTTP Web Server to easily access the Virtual HMI web interface on the SecureEdge Pro.
 
 Refer to the screenshot for configuration details:  
-![HTTP Server](ixon_cloud_settings/http_server_virtual_hmi.png)
+![HTTP Server](node-red/ixon_cloud_settings/http_server_virtual_hmi.png)
 
 - You can now access the Virtual HMI web interface on the SecureEdge Pro via the HTTP Web Server you created in IXON Cloud.
 
 ### 6. Set Up OPC UA Data Source in IXON Cloud
 
 - In IXON Cloud, create an OPC UA datasource to access the OPC UA server running in Node-RED on the SecureEdge Pro.
-- Import the variables using the provided CSV file: `ixon_cloud_settings/variables.csv`.
+- Import the variables using the provided CSV file: `opcua-server/ixon_cloud_settings/variables.csv`.
 - Run the test to ensure the connection is working.
 
 Refer to the screenshots for configuration and testing details:  
-![Data Source](ixon_cloud_settings/data_source.png)  
-![Variables Run Test](ixon_cloud_settings/variables_run_test.png)
+![Data Source](opcua-server/ixon_cloud_settings/data_source.png)  
+![Variables Run Test](opcua-server/ixon_cloud_settings/variables_run_test.png)
 
 ### 7. You can now access the data from the OPC UA server in IXON Cloud.

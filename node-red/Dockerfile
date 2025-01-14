@@ -24,7 +24,7 @@ COPY flows.json /data/flows.json
 # Expose Node-RED's default port
 EXPOSE 1880
 # Expose OPCUA port
-EXPOSE 53881
+# EXPOSE 50000
 
 # Expose Modbus TCP port
 # EXPOSE 502

@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  opcua-server:
+    build:
+      context: ./opcua-server
+      dockerfile: Dockerfile
+    ports:
+      - '50000:50000' # Expose OPC UA server port
+    networks:
+      - customer-network
+    environment:
+      - TZ=UTC # Optional: Set timezone
+      # HOST_IP is hard-coded in the Dockerfile, no need to set here
+    # Removed the 'command' override to use Dockerfile's CMD
+    # command:
+    #   ['--pn=50000', '--autoaccept', '--nodesfile=/appdata/nodesfile.json']
+
+  node-red:
+    build:
+      context: ./node-red
+      dockerfile: Dockerfile
+    container_name: node-red-client
+    ports:
+      - '1880:1880'
+    volumes:
+      - node_red_data:/data
+    depends_on:
+      - opcua-server
+    environment:
+      - OPCUA_SERVER_URL=opc.tcp://opcua-server:50000/UA/Default # Ensure correct endpoint path
+    networks:
+      - customer-network
+
+volumes:
+  node_red_data:
+
+networks:
+  customer-network:
+    driver: bridge
